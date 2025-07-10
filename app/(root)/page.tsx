@@ -1,6 +1,6 @@
 import RightSideBar from "@/components/RightSideBar";
-import HeaderBox from "@/components/ui/HeaderBox";
-import TotalBalanceBox from "@/components/ui/TotalBalanceBox";
+import HeaderBox from "@/components/HeaderBox";
+import TotalBalanceBox from "@/components/TotalBalanceBox";
 import React from "react";
 
 function Dashboard() {

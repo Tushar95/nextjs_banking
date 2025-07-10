@@ -1,7 +1,7 @@
 import { formatAmount } from "@/lib/utils";
 import React from "react";
-import CountupWrapper from "../CountupWrapper";
-import DoughnutChart from "../DoughnutChart";
+import CountupWrapper from "./CountupWrapper";
+import DoughnutChart from "./DoughnutChart";
 
 function TotalBalanceBox({
   accounts = [],
