@@ -8,23 +8,17 @@ import { useForm } from "react-hook-form";
 import { formSchema } from "@/lib/formSchema";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { Form } from "@/components/ui/form";
 import CustomFormInput from "./CustomFormInput";
-import { Loader, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
+import { signIn, signUp } from "@/lib/actions/user.action";
+import { useRouter } from "next/navigation";
 
 function AuthForm({ type }: { type: string }) {
   const [user, setUser] = useState(null);
   const [isLoading, setLoading] = useState(false);
   const fontSchemaWithLoginType = formSchema(type);
+  const router = useRouter();
   // 1. Define your form.
   const form = useForm<z.infer<typeof fontSchemaWithLoginType>>({
     resolver: zodResolver(fontSchemaWithLoginType),
@@ -43,9 +37,27 @@ function AuthForm({ type }: { type: string }) {
       password: values.password ? "****" : "",
     };
     setLoading(true);
-    console.log(safeValues);
-    setLoading(false);
-  }
+    try {
+      if (type === "sign-up") {
+        const newUser = await signUp(values);
+        setUser(newUser);
+      }
+
+      if (type === "sign-in") {
+        const response = await signIn({
+            email: values.email,
+            password: values.password
+        });
+        if(response) {
+          router.push("/");
+        }
+      }
+    } catch (error) {
+      console.error("Error", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <section className="auth-form">
@@ -68,14 +80,14 @@ function AuthForm({ type }: { type: string }) {
             {user ? "Link Account" : type === "sign-in" ? "Sign-In" : "Sign-Up"}
             <p className="text-16 font-normal text-gray-600">
               {user
-                ? "Linknyour account to get started"
+                ? "Link your account to get started"
                 : "Please enter your details"}
             </p>
           </h1>
         </div>
       </header>
       {user ? (
-        <div className="flex flex-col gap-4">{/* PlainLink */}</div>
+        <div className="flex flex-col gap-4">{/* PlaidLink */}</div>
       ) : (
         <>
           <Form {...form}>

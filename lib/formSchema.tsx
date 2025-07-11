@@ -18,10 +18,10 @@ export const formSchema = (type: string) => z.object({
     city: (type === 'sign-in' ? z.string().optional() : z.string().min(3, {
         message: "Enter atleast 3 characters"
     })),
-    state: (type === 'sign-in' ? z.string().optional() : z.string().min(3, {
+    state: (type === 'sign-in' ? z.string().optional() : z.string().min(2, {
         message: "Enter atleast 3 characters"
     })),
-    postalCode: (type === 'sign-in' ? z.number().optional() : z.number().min(3, {
+    postalCode: (type === 'sign-in' ? z.string().optional() : z.string().min(3, {
         message: "Enter atleast 3 characters"
     })),
     dob: (type === 'sign-in' ? z.string().optional() : z.string().min(3, {

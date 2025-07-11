@@ -2,13 +2,11 @@ import RightSideBar from "@/components/RightSideBar";
 import HeaderBox from "@/components/HeaderBox";
 import TotalBalanceBox from "@/components/TotalBalanceBox";
 import React from "react";
+import { getLoggedInUser } from "@/lib/actions/user.action";
 
-function Dashboard() {
-  const loggedIn = {
-    firstName: "Tushar",
-    lastName: "Coder",
-    email: 'tushar@gmail.com'
-  };
+async function Dashboard() {
+  const loggedIn = await getLoggedInUser();
+  
   return (
     <section className="home">
       <div className="home-content">
@@ -27,13 +25,8 @@ function Dashboard() {
           />
         </header>
         RECENT Transactions
-
       </div>
-      <RightSideBar 
-      user={loggedIn}
-      transactions={[]}
-      banks={[{},{}]}
-      />
+      <RightSideBar user={loggedIn} transactions={[]} banks={[{}, {}]} />
     </section>
   );
 }
