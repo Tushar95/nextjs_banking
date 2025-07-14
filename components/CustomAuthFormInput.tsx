@@ -17,7 +17,7 @@ interface CustomFormInputProps {
   inputType?: string;
 }
 
-function CustomFormInput({
+function CustomAuthFormInput({
   form,
   name: nameField,
   label: labelField,
@@ -50,4 +50,4 @@ function CustomFormInput({
   );
 }
 
-export default CustomFormInput;
+export default CustomAuthFormInput;

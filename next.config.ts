@@ -2,7 +2,22 @@ import {withSentryConfig} from "@sentry/nextjs";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  webpack: (config, { isServer }) => {
+    config.ignoreWarnings = [
+      {
+        module: /@opentelemetry/,
+        message: /the request of a dependency is an expression/,
+      },
+    ];
+    return config;
+  },images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**'
+      }
+    ]
+  }
 };
 
 export default withSentryConfig(nextConfig, {
@@ -36,3 +51,5 @@ disableLogger: true,
 // https://vercel.com/docs/cron-jobs
 automaticVercelMonitors: true,
 });
+
+module.exports=nextConfig;

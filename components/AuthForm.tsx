@@ -9,10 +9,11 @@ import { formSchema } from "@/lib/formSchema";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import CustomFormInput from "./CustomFormInput";
+import CustomAuthFormInput from "./CustomAuthFormInput";
 import { Loader2 } from "lucide-react";
-import { signIn, signUp } from "@/lib/actions/user.action";
+import { signIn, signUp } from "@/lib/actions/user.actions";
 import { useRouter } from "next/navigation";
+import PlaidLink from "./PlaidLink";
 
 function AuthForm({ type }: { type: string }) {
   const [user, setUser] = useState(null);
@@ -39,7 +40,20 @@ function AuthForm({ type }: { type: string }) {
     setLoading(true);
     try {
       if (type === "sign-up") {
-        const newUser = await signUp(values);
+        const userData = {
+          ...values,
+          address1: values.address1!,
+          city: values.city!,
+          state: values.state!,
+          postalCode: values.postalCode!,
+          dateOfBirth: values.dateOfBirth!,
+          ssn: values.ssn!,
+          email: values.email!,
+          password: values.password!,
+          firstName: values.firstName!,
+          lastName: values.lastName!,
+        };
+        const newUser = await signUp(userData);
         setUser(newUser);
       }
 
@@ -87,7 +101,9 @@ function AuthForm({ type }: { type: string }) {
         </div>
       </header>
       {user ? (
-        <div className="flex flex-col gap-4">{/* PlaidLink */}</div>
+        <div className="flex flex-col gap-4">
+        <PlaidLink user={user} variant='primary'/>
+        </div>
       ) : (
         <>
           <Form {...form}>
@@ -95,39 +111,39 @@ function AuthForm({ type }: { type: string }) {
               {type === "sign-up" && (
                 <>
                   <div className="flex gap-12">
-                    <CustomFormInput
+                    <CustomAuthFormInput
                       form={form}
                       name="firstName"
                       label="First Name"
                       placeholder="Enter your Firstname"
                     />
-                    <CustomFormInput
+                    <CustomAuthFormInput
                       form={form}
                       name="lastName"
                       label="Last Name"
                       placeholder="Enter your lastName"
                     />
                   </div>
-                  <CustomFormInput
+                  <CustomAuthFormInput
                     form={form}
                     name="address1"
                     label="Address 1"
                     placeholder="Enter your Address"
                   />
-                  <CustomFormInput
+                  <CustomAuthFormInput
                     form={form}
                     name="city"
                     label="City"
                     placeholder="Enter your City"
                   />
                   <div className="flex gap-12">
-                    <CustomFormInput
+                    <CustomAuthFormInput
                       form={form}
                       name="state"
                       label="State"
                       placeholder="Enter your State"
                     />
-                    <CustomFormInput
+                    <CustomAuthFormInput
                       form={form}
                       name="postalCode"
                       label="Postal Code"
@@ -135,13 +151,13 @@ function AuthForm({ type }: { type: string }) {
                     />
                   </div>
                   <div className="flex gap-12">
-                    <CustomFormInput
+                    <CustomAuthFormInput
                       form={form}
-                      name="dob"
+                      name="dateOfBirth"
                       label="Date of Birth"
                       placeholder="yyyy-mm-dd"
                     />
-                    <CustomFormInput
+                    <CustomAuthFormInput
                       form={form}
                       name="ssn"
                       label="SSN"
@@ -150,13 +166,13 @@ function AuthForm({ type }: { type: string }) {
                   </div>
                 </>
               )}
-              <CustomFormInput
+              <CustomAuthFormInput
                 form={form}
                 name="email"
                 label="Email"
                 placeholder="Enter your Email"
               />
-              <CustomFormInput
+              <CustomAuthFormInput
                 form={form}
                 name="password"
                 label="Password"

@@ -1,9 +1,25 @@
-import React from 'react'
+import PaymentTransferForm from "@/components/PaymentTransferForm";
+import { getAccounts } from "@/lib/actions/bank.actions";
+import { getLoggedInUser } from "@/lib/actions/user.actions";
+import React from "react";
 
-function PaymentTransfer() {
+async function PaymentTransfer() {
+  const loggedIn = await getLoggedInUser();
+  const accounts = await getAccounts({
+    userId: loggedIn.userId,
+  });
+  if (!accounts) return;
+
+  const accountData = accounts?.data;
   return (
-    <div>PaymentTransfer</div>
-  )
+    <>
+    {/* <div>Page</div> */}
+    <section className="payment-transfer">
+      Page
+      <PaymentTransferForm accounts={accountData} />
+    </section>
+    </>
+  );
 }
 
-export default PaymentTransfer
+export default PaymentTransfer;

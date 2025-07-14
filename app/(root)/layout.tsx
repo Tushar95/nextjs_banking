@@ -1,7 +1,7 @@
 import "@/app/globals.css";
 import MobileNav from "@/components/MobileNav";
 import Sidebar from "@/components/Sidebar";
-import { getLoggedInUser, logoutAccount } from "@/lib/actions/user.action";
+import { getLoggedInUser, logoutAccount } from "@/lib/actions/user.actions";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import { cookies } from 'next/headers';
@@ -12,7 +12,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const loggedIn = await getLoggedInUser();
-  console.log(loggedIn)
+  // console.log(loggedIn)
   if (!loggedIn) {
     if((await cookies()).get("appwrite-session"))
     logoutAccount();

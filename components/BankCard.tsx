@@ -2,8 +2,9 @@ import { formatAmount } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import Copy from "./Copy";
 
-function BankCard({ account, userName, showBalance }: CreditCardProps) {
+function BankCard({ account, userName, showBalance = true }: CreditCardProps) {
   return (
     <>
       <div className="flex flex-col">
@@ -46,6 +47,8 @@ function BankCard({ account, userName, showBalance }: CreditCardProps) {
             className="absolute top-0 left-0"
           />
         </Link>
+
+        {showBalance && <Copy title={account?.shareableId}/>}
       </div>
     </>
   );

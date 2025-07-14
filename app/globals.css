@@ -60,6 +60,10 @@
     @apply flex items-center justify-center;
   }
 
+  .flex-between {
+    @apply flex items-center justify-between;
+  }
+
   .header-2 {
     @apply text-18 font-semibold text-gray-900;
   }

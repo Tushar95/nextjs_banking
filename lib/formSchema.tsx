@@ -24,7 +24,7 @@ export const formSchema = (type: string) => z.object({
     postalCode: (type === 'sign-in' ? z.string().optional() : z.string().min(3, {
         message: "Enter atleast 3 characters"
     })),
-    dob: (type === 'sign-in' ? z.string().optional() : z.string().min(3, {
+    dateOfBirth: (type === 'sign-in' ? z.string().optional() : z.string().min(3, {
         message: "Enter atleast 3 characters"
     })),
     ssn: (type === 'sign-in' ? z.string().optional() : z.string().min(3, {
